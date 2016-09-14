@@ -29,11 +29,14 @@ source-repository head
 library
   exposed-modules:     System.IO.CodePage
                        System.Win32.CodePage
-  build-depends:       base >= 4.3 && < 4.10
+  build-depends:       base >= 4.3 && < 5
+  build-tools:         hsc2hs
   if os(windows)
-    cpp-options:       -DWINDOWS
+    cpp-options:       "-DWINDOWS"
     build-depends:     Win32
 
   hs-source-dirs:      src
+  include-dirs:        include
+  includes:            windows_cconv.h
   default-language:    Haskell2010
   ghc-options:         -Wall
