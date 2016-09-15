@@ -1,2 +1,19 @@
-# code-page
+# `code-page`
+[![Hackage](https://img.shields.io/hackage/v/code-page.svg)][Hackage: code-page]
+[![Hackage Dependencies](https://img.shields.io/hackage-deps/v/code-page.svg)](http://packdeps.haskellers.com/reverse/code-page)
+[![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
+[![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
+[![Linux build](https://img.shields.io/travis/RyanGlScott/code-page.svg)](https://travis-ci.org/RyanGlScott/code-page)
+[![Windows build](https://ci.appveyor.com/api/projects/status/kaxqsgm2xx66l2q5?svg=true)](https://ci.appveyor.com/project/RyanGlScott/code-page)
+
+[Hackage: code-page]:
+  http://hackage.haskell.org/package/code-page
+  "code-page package on Hackage"
+[Haskell.org]:
+  http://www.haskell.org
+  "The Haskell Programming Language"
+[tl;dr Legal: BSD3]:
+  https://tldrlegal.com/license/bsd-3-clause-license-%28revised%29
+  "BSD 3-Clause License (Revised)"
+
 Windows code page library for Haskell
