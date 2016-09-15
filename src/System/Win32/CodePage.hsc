@@ -1,7 +1,17 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 
--- TODO Docs
+{-|
+Module:      System.Win32.CodePage
+Copyright:   (C) 2016 Ryan Scott
+License:     BSD-style (see the file LICENSE)
+Maintainer:  Ryan Scott
+Stability:   Provisional
+Portability: Portable
+
+On Windows, this exports functions for getting, setting, and analyzing code pages.
+On other operating systems, this exports nothing.
+-}
 module System.Win32.CodePage (
 #ifdef WINDOWS
       -- * The 'CodePage' type
@@ -60,11 +70,11 @@ cP_INSTALLED, cP_SUPPORTED :: DWORD
 cP_INSTALLED = #{const CP_INSTALLED}
 cP_SUPPORTED = #{const CP_SUPPORTED}
 
--- TODO: Docs
+-- | Enumerates all installed code pages in sorted order.
 installedCodePages :: IO [CodePage]
 installedCodePages = systemCodePages cP_INSTALLED
 
--- TODO: Docs
+-- | Enumerates all supported code pages in sorted order.
 supportedCodePages :: IO [CodePage]
 supportedCodePages = systemCodePages cP_SUPPORTED
 
