@@ -120,7 +120,7 @@ withCodePageVerbosity chatty cp inner = do
                     )
             | otherwise = id
         fixOutput
-            | setInput = bracket_
+            | setOutput = bracket_
                 (do
                     setConsoleOutputCP cp
                     hSetEncoding stdout expected
