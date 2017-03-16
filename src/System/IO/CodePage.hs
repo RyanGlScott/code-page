@@ -31,6 +31,7 @@ module System.IO.CodePage (
 #ifdef WINDOWS
 import           Control.Exception (bracket_)
 import           Control.Monad (when)
+import           Data.Foldable (forM_)
 import           System.IO (hGetEncoding, hPutStrLn, hSetEncoding, stderr, stdin, stdout)
 import qualified System.Win32.CodePage as Win32 (CodePage)
 import           System.Win32.CodePage hiding (CodePage)
@@ -116,7 +117,7 @@ withCodePageVerbosity chatty cp inner = do
                     )
                 (do
                     setConsoleCP origCPI
-                    mapM_ (hSetEncoding stdin) mbOrigStdinEnc
+                    forM_ mbOrigStdinEnc $ hSetEncoding stdin
                     )
             | otherwise = id
         fixOutput
@@ -128,8 +129,8 @@ withCodePageVerbosity chatty cp inner = do
                     )
                 (do
                     setConsoleOutputCP origCPO
-                    mapM_ (hSetEncoding stdout) mbOrigStdoutEnc
-                    mapM_ (hSetEncoding stderr) mbOrigStderrEnc
+                    forM_ mbOrigStdoutEnc $ hSetEncoding stdout
+                    forM_ mbOrigStderrEnc $ hSetEncoding stderr
                     )
             | otherwise = id
 
