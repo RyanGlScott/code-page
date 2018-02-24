@@ -16,4 +16,7 @@
   https://tldrlegal.com/license/bsd-3-clause-license-%28revised%29
   "BSD 3-Clause License (Revised)"
 
-Windows code page library for Haskell
+This library provides two modules:
+
+* `System.IO.CodePage`: a cross-platform module that exports functions which adjust code pages on Windows, and do nothing on other operating systems.
+* `System.Win32.CodePage`: On Windows, this exports functions for getting, setting, and analyzing code pages. On other operating systems, this module exports nothing.
