@@ -4,13 +4,12 @@ environment:
   global:
     CABOPTS:  "--store-dir=C:\\SR --http-transport=plain-http"
   matrix:
-    # - GHCVER: "8.4.2"
-    # - GHCVER: "8.2.2"
-    # - GHCVER: "8.0.2.2"
-    # - GHCVER: "7.10.3.2"
-    # - GHCVER: "7.8.4.1"
-    # - GHCVER: "7.6.3.1"
-    - GHCVER: "7.4.2"
+    - GHCVER: "8.4.2"
+    - GHCVER: "8.2.2"
+    - GHCVER: "8.0.2.2"
+    - GHCVER: "7.10.3.2"
+    - GHCVER: "7.8.4.1"
+    - GHCVER: "7.6.3.1"
 
 cache:
  - "C:\\SR"
@@ -29,4 +28,4 @@ build: off
 test_script:
  - IF EXIST configure.ac bash -c "autoreconf -i"
  - "echo packages:. > cabal.project"
- - "cabal %CABOPTS% new-test -j1 all -v3 --hsc2hs-options=--verbose"
+ - "cabal %CABOPTS% new-test -j1 all"
