@@ -180,7 +180,7 @@ codePageEncoding' = id
 setConsoleCP', setConsoleOutputCP' :: CodePage -> IO ()
 #ifdef WINDOWS
 setConsoleCP'       = setConsoleCP
-setConsoleOutputCP' = setConsoleOutputCP'
+setConsoleOutputCP' = setConsoleOutputCP
 #else
 setConsoleCP'       _ = return ()
 setConsoleOutputCP' _ = return ()
