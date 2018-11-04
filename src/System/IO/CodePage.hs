@@ -50,10 +50,14 @@ module System.IO.CodePage (
 import Control.Exception (bracket_)
 import Control.Monad (when)
 import Data.Foldable (forM_)
-import GHC.IO.Encoding (getLocaleEncoding, setLocaleEncoding, textEncodingName)
+import GHC.IO.Encoding (textEncodingName)
 import System.IO ( TextEncoding, hGetEncoding, hPutStrLn, hSetEncoding
                  , stderr, stdin, stdout )
 import System.IO.CodePage.Internal
+
+#if MIN_VERSION_base(4,5,0)
+import GHC.IO.Encoding (getLocaleEncoding, setLocaleEncoding)
+#endif
 
 #ifdef WINDOWS
 import System.Win32.CodePage hiding (CodePage)
@@ -118,7 +122,9 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
       mbOrigStdinEnc  <- hGetEncoding stdin
       mbOrigStdoutEnc <- hGetEncoding stdout
       mbOrigStderrEnc <- hGetEncoding stderr
+#if MIN_VERSION_base(4,5,0)
       origLocaleEnc   <- getLocaleEncoding
+#endif
 
       let expected     = codePageEncoding' fallback cp
           expectedName = textEncodingName expected
@@ -138,7 +144,9 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
           setInput  = fmap textEncodingName mbOrigStdinEnc  /= Just expectedName
           setOutput = fmap textEncodingName mbOrigStdoutEnc /= Just expectedName
 #endif
+#if MIN_VERSION_base(4,5,0)
           setLocale = textEncodingName origLocaleEnc /= expectedName
+#endif
           fixInput
               | setInput = bracket_
                   (do
@@ -164,14 +172,18 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
                       )
               | otherwise = id
           fixLocale
-              | setLocale = bracket_
+#if MIN_VERSION_base(4,5,0)
+              | setLocale
+              = bracket_
                   (do when chatty $ hPutStrLn stderr $ unwords
                         [ "Setting locale encoding to"
                         , expectedName
                         ]
                       setLocaleEncoding expected)
                   (setLocaleEncoding origLocaleEnc)
-              | otherwise = id
+              | otherwise
+#endif
+              = id
 
       case (setInput, setOutput) of
           (False, False) -> return ()
