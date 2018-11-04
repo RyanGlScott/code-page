@@ -15,6 +15,8 @@
   these functions did not do anything at all on non-Windows OSes. If you
   would like to recover this old behavior, use
   `withCodePageOptions defaultOptions{nonWindowsBehavior = NonWindowsDoNothing}`.
+* `withCodePage` and friends now change the locale encoding in addition to the
+  encodings for `stdin`, `stdout`, and `stderr`.
 * Add `withCP1252` and `cp1252` for the Latin1 code page.
 * Add a `System.IO.CodePage.Internal` module that contains certain internal
   details (such as the constructors of `Options` and `NonWindowsBehavior`).

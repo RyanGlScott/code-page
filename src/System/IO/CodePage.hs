@@ -50,14 +50,13 @@ module System.IO.CodePage (
 import Control.Exception (bracket_)
 import Control.Monad (when)
 import Data.Foldable (forM_)
+import GHC.IO.Encoding (getLocaleEncoding, setLocaleEncoding, textEncodingName)
 import System.IO ( TextEncoding, hGetEncoding, hPutStrLn, hSetEncoding
                  , stderr, stdin, stdout )
 import System.IO.CodePage.Internal
 
 #ifdef WINDOWS
 import System.Win32.CodePage hiding (CodePage)
-#else
-import GHC.IO.Encoding (textEncodingName)
 #endif
 
 -- | Sets the code page for an action to UTF-8 as necessary.
@@ -119,18 +118,27 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
       mbOrigStdinEnc  <- hGetEncoding stdin
       mbOrigStdoutEnc <- hGetEncoding stdout
       mbOrigStderrEnc <- hGetEncoding stderr
+      origLocaleEnc   <- getLocaleEncoding
 
-      let expected = codePageEncoding' fallback cp
+      let expected     = codePageEncoding' fallback cp
+          expectedName = textEncodingName expected
+          warn typ = when chatty $ hPutStrLn stderr $ concat
+              [ "Setting"
+              , typ
+              , " codepage to " ++ show cp
+              , if expectedName == ("CP" ++ show cp)
+                   then ""
+                   else " (" ++ expectedName ++ ")"
+              ]
 #ifdef WINDOWS
           setInput  = origCPI /= cp
           setOutput = origCPO /= cp
 #else
-          -- Crude, but the best available option on non-Windows OSes
-          setInput  = fmap textEncodingName mbOrigStdinEnc
-                        /= Just (textEncodingName expected)
-          setOutput = fmap textEncodingName mbOrigStdoutEnc
-                        /= Just (textEncodingName expected)
+          -- Crude, but the best available option
+          setInput  = fmap textEncodingName mbOrigStdinEnc  /= Just expectedName
+          setOutput = fmap textEncodingName mbOrigStdoutEnc /= Just expectedName
 #endif
+          setLocale = textEncodingName origLocaleEnc /= expectedName
           fixInput
               | setInput = bracket_
                   (do
@@ -155,6 +163,15 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
                       forM_ mbOrigStderrEnc $ hSetEncoding stderr
                       )
               | otherwise = id
+          fixLocale
+              | setLocale = bracket_
+                  (do when chatty $ hPutStrLn stderr $ unwords
+                        [ "Setting locale encoding to"
+                        , expectedName
+                        ]
+                      setLocaleEncoding expected)
+                  (setLocaleEncoding origLocaleEnc)
+              | otherwise = id
 
       case (setInput, setOutput) of
           (False, False) -> return ()
@@ -162,13 +179,7 @@ withCodePageOptions (Options{chatty, nonWindowsBehavior}) cp inner =
           (True, False) -> warn " input"
           (False, True) -> warn " output"
 
-      fixInput $ fixOutput inner
-    where
-      warn typ = when chatty $ hPutStrLn stderr $ concat
-          [ "Setting"
-          , typ
-          , " codepage to " ++ show cp
-          ]
+      fixInput $ fixOutput $ fixLocale inner
 
 codePageEncoding' :: (CodePage -> TextEncoding) -> CodePage -> TextEncoding
 #ifdef WINDOWS
