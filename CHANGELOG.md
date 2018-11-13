@@ -1,4 +1,4 @@
-## next [????.??.??]
+## 0.2 [2018.11.13]
 * Rename the `withCodePageVerbosity` function to `withCodePageOptions` to
   reflect the fact that its first argument is now an `Options` data type
   instead of just a `Bool` to represent its verbosity. (The ability to
