@@ -1,5 +1,5 @@
 name:                code-page
-version:             0.1.3
+version:             0.2
 synopsis:            Windows code page library for Haskell
 description:         This library provides two modules:
                      .
@@ -39,6 +39,7 @@ source-repository head
 
 library
   exposed-modules:     System.IO.CodePage
+                       System.IO.CodePage.Internal
                        System.Win32.CodePage
   build-depends:       base >= 4.3 && < 5
   build-tools:         hsc2hs
@@ -56,8 +57,9 @@ test-suite tests
   type:                exitcode-stdio-1.0
   main-is:             Tests.hs
 
-  build-depends:       base      >= 4.3 && < 5
+  build-depends:       base >= 4.3 && < 5
                      , code-page
 
   hs-source-dirs:      tests
   default-language:    Haskell2010
+  ghc-options:         -Wall -threaded -rtsopts

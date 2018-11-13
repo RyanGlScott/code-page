@@ -12,11 +12,12 @@ module Main (main) where
 
 import System.IO.CodePage
 
-printUnicodeString :: IO ()
-printUnicodeString = do
-    putStrLn "κόσμε"
-    putStrLn "→"
-    putStrLn "☀☁☂☃☄"
+printUnicodeStrings :: IO ()
+printUnicodeStrings = do
+  putStrLn "κόσμε"
+  putStrLn "→"
+  putStrLn "☀☁☂☃☄"
 
 main :: IO ()
-main = withCodePageVerbosity True 65001 printUnicodeString
+main = withCP1252 $
+       withCodePageOptions defaultOptions{chatty = True} cp65001 printUnicodeStrings
