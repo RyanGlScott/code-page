@@ -1,5 +1,5 @@
 name:                code-page
-version:             0.2
+version:             0.2.1
 synopsis:            Windows code page library for Haskell
 description:         This library provides two modules:
                      .

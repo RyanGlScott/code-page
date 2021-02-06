@@ -1,4 +1,4 @@
-### next [????.??.??]
+### 0.2.1 [2021.02.06]
 * Allow building with `base-4.15` (GHC 9.0) or later on Windows.
 
 ## 0.2 [2018.11.13]
