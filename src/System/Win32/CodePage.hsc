@@ -46,7 +46,7 @@ import Data.List
 import Foreign.C.String
 import Foreign.Ptr
 
-import GHC.IO.Encoding.CodePage
+import GHC.IO.Encoding.CodePage (codePageEncoding, mkCodePageEncoding)
 
 import System.Win32.Console
 import System.Win32.NLS

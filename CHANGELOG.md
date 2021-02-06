@@ -1,3 +1,6 @@
+### next [????.??.??]
+* Allow building with `base-4.15` (GHC 9.0) or later on Windows.
+
 ## 0.2 [2018.11.13]
 * Rename the `withCodePageVerbosity` function to `withCodePageOptions` to
   reflect the fact that its first argument is now an `Options` data type
