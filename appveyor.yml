@@ -32,5 +32,4 @@ build: off
 
 test_script:
  - IF EXIST configure.ac bash -c "autoreconf -i"
- - "echo packages:. > cabal.project"
- - "cabal %CABOPTS% new-test -j1 all"
+ - "cabal %CABOPTS% new-test -j2 all"
