@@ -1,6 +1,5 @@
 # `code-page`
 [![Hackage](https://img.shields.io/hackage/v/code-page.svg)][Hackage: code-page]
-[![Hackage Dependencies](https://img.shields.io/hackage-deps/v/code-page.svg)](http://packdeps.haskellers.com/reverse/code-page)
 [![Haskell Programming Language](https://img.shields.io/badge/language-Haskell-blue.svg)][Haskell.org]
 [![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)][tl;dr Legal: BSD3]
 [![Linux build](https://github.com/RyanGlScott/code-page/workflows/Haskell-CI/badge.svg)](https://github.com/RyanGlScott/code-page/actions?query=workflow%3AHaskell-CI)
